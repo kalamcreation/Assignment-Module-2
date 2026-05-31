@@ -1,0 +1,1198 @@
+/* =============================================================
+   style4.css  —  PureHealth Website
+   Pure Raw CSS  |  No Framework Dependency
+   Fully Responsive  |  Clean Human-Written Code
+   
+   Bug Fixes Applied:
+   #1  Wrong Tailwind CDN (removed from HTML, not needed here)
+   #2  .hamburger.open span:nth-child(3) — missing dot fixed
+   #3  var(--r--sm) double-dash typo fixed → var(--r-sm)
+   #4  .features-col vs .feature-col mismatch fixed
+   #5  about-photo-main width 40% → 58% (matches screenshot)
+   #6  dept h2 missing .dept-title class fixed in HTML
+   #7  doctor.png local file → Unsplash URL fixed in HTML
+   #8  Hamburger JS was completely missing — added in HTML
+============================================================= */
+
+
+/* =============================================================
+   1. DESIGN TOKENS  (CSS Custom Properties)
+============================================================= */
+
+:root {
+    /* Colors */
+    --blue:         #2563EB;
+    --blue-dark:    #1d4ed8;
+    --blue-light:   #EFF6FF;
+    --teal:         #1BAA7A;
+    --teal-dark:    #158f64;
+    --teal-light:   #E6F7F2;
+
+    /* Text */
+    --txt-head:     #1a2438;
+    --txt-body:     #52607a;
+    --txt-muted:    #8a95a8;
+    --white:        #ffffff;
+
+    /* Backgrounds */
+    --bg-page:      #ffffff;
+    --bg-hero:      #eef3ff;
+    --bg-dept:      #eef2fb;
+    --border:       #e4e8f2;
+
+    /* Shadows */
+    --sh-sm:        0 2px 8px rgba(0, 0, 0, 0.07);
+    --sh-md:        0 6px 24px rgba(37, 99, 235, 0.12);
+    --sh-lg:        0 12px 40px rgba(37, 99, 235, 0.16);
+
+    /* Border Radii */
+    --r-sm:         8px;
+    --r-md:         14px;
+    --r-lg:         20px;
+    --r-full:       9999px;
+
+    /* Fonts */
+    --f-head:       'Nunito Sans', sans-serif;
+    --f-body:       'Inter', sans-serif;
+
+    /* Transition shorthand */
+    --ease:         all 0.22s ease;
+}
+
+
+/* =============================================================
+   2. RESET & BASE
+============================================================= */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--f-body);
+    color: var(--txt-body);
+    background: var(--bg-page);
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* =============================================================
+   3. TOP BAR
+============================================================= */
+
+.topbar {
+    background: var(--blue);
+    padding: 9px 0;
+}
+
+.topbar-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.topbar-left,
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.topbar-item {
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.82rem;
+    font-family: var(--f-body);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.topbar-sep {
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0 4px;
+}
+
+.topbar-social {
+    color: rgba(255, 255, 255, 0.8);
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--ease);
+}
+
+.topbar-social:hover {
+    color: var(--white);
+}
+
+.topbar-lang {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.82rem;
+}
+
+
+/* =============================================================
+   4. NAVBAR
+============================================================= */
+
+.navbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--sh-sm);
+}
+
+.nav-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    position: relative;
+}
+
+/* Logo */
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.logo-text {
+    font-family: var(--f-head);
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--blue);
+    letter-spacing: -0.4px;
+}
+
+/* Desktop nav links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-links li a {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-family: var(--f-head);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--txt-head);
+    padding: 8px 12px;
+    border-radius: var(--r-sm);
+    transition: var(--ease);
+    white-space: nowrap;
+}
+
+.nav-links li a:hover {
+    color: var(--blue);
+}
+
+.nav-active a {
+    color: var(--blue) !important;
+}
+
+/* Appointment button */
+.btn-appointment {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue);
+    color: var(--white);
+    border-radius: var(--r-full);
+    padding: 11px 22px;
+    font-family: var(--f-head);
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: var(--ease);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.btn-appointment:hover {
+    background: var(--blue-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--sh-md);
+}
+
+/* Mobile-only nav button (hidden on desktop) */
+.nav-btn-mobile {
+    display: none;
+}
+
+/* Desktop-only appointment button */
+.nav-btn-desktop {
+    display: inline-flex;
+}
+
+/* Hamburger button (hidden on desktop) */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: var(--r-sm);   /* Bug Fix #3: was var(--r--sm) — double dash */
+    transition: var(--ease);
+}
+
+.hamburger:hover {
+    background: var(--bg-hero);
+}
+
+.hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--txt-head);
+    border-radius: 2px;
+    transition: var(--ease);
+    transform-origin: center;
+}
+
+/* Hamburger → X animation */
+.hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+/* Bug Fix #2: was "hamburger.open" — missing the dot */
+.hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+
+/* =============================================================
+   5. HERO SECTION
+============================================================= */
+
+.hero-section {
+    background: var(--bg-hero);
+    overflow: hidden;
+}
+
+.hero-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 90px 32px 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 560px;
+    padding-bottom: 100px;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: var(--teal);
+    color: var(--white);
+    border-radius: var(--r-full);
+    padding: 7px 20px;
+    font-family: var(--f-head);
+    font-size: 0.84rem;
+    font-weight: 700;
+    margin-bottom: 22px;
+    letter-spacing: 0.01em;
+}
+
+.hero-title {
+    font-family: var(--f-head);
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    font-weight: 900;
+    color: var(--txt-head);
+    line-height: 1.12;
+    letter-spacing: -1.5px;
+    margin-bottom: 4px;
+}
+
+.hero-blue {
+    color: var(--blue);
+    display: block;
+}
+
+.hero-underline {
+    width: clamp(160px, 40%, 220px);
+    margin-bottom: 20px;
+}
+
+.hero-underline svg {
+    width: 100%;
+    height: auto;
+}
+
+.hero-desc {
+    font-size: 1rem;
+    color: var(--txt-body);
+    line-height: 1.72;
+    max-width: 460px;
+    margin-bottom: 36px;
+}
+
+.hero-btns {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.btn-find-doctor {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blue);
+    color: var(--white);
+    border-radius: var(--r-full);
+    padding: 14px 28px;
+    font-family: var(--f-head);
+    font-size: 0.92rem;
+    font-weight: 700;
+    transition: var(--ease);
+}
+
+.btn-find-doctor:hover {
+    background: var(--blue-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--sh-md);
+}
+
+.btn-emergency {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    color: var(--blue);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-full);
+    padding: 13px 26px;
+    font-family: var(--f-head);
+    font-size: 0.92rem;
+    font-weight: 700;
+    box-shadow: var(--sh-sm);
+    transition: var(--ease);
+}
+
+.btn-emergency:hover {
+    border-color: var(--blue);
+    transform: translateY(-2px);
+    box-shadow: var(--sh-md);
+}
+
+/* Hero right: doctor photo */
+.hero-visual {
+    position: relative;
+    flex-shrink: 0;
+    width: clamp(280px, 42%, 480px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.hero-img-bg-circle {
+    position: absolute;
+    bottom: 0;
+    right: 10%;
+    width: 88%;
+    padding-bottom: 88%;
+    background: rgba(255, 255, 255, 0.72);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.hero-doctor-photo {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    filter: drop-shadow(0 8px 32px rgba(37, 99, 235, 0.18));
+}
+
+
+/* =============================================================
+   6. ABOUT / TRUSTED HEALTHCARE SECTION
+============================================================= */
+
+.about-section {
+    padding: 88px 0 100px;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.about-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 64px;
+}
+
+/* Left photo grid */
+.about-images {
+    flex: 0 0 auto;
+    width: clamp(320px, 46%, 510px);
+    position: relative;
+    /* Extra bottom space for the experience badge overlay */
+    padding-bottom: 30px;
+}
+
+/* Top row: tall photo + 85% card */
+.about-top-row {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+}
+
+/*
+    Bug Fix #5: was width: 40% — too narrow, didn't match screenshot.
+    Now 58% so the photo is tall and dominant like in the design.
+    The 85% card fills the remaining ~38%.
+*/
+.about-photo-main {
+    width: 58%;
+    flex-shrink: 0;
+    border-radius: var(--r-md);
+    overflow: hidden;
+    height: clamp(220px, 30vw, 315px);
+}
+
+.about-stat-card {
+    flex: 1;
+    background: var(--teal);
+    border-radius: var(--r-md);
+    padding: 28px 18px;
+    color: var(--white);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    box-shadow: 0 8px 28px rgba(27, 170, 122, 0.25);
+}
+
+.about-stat-num {
+    font-family: var(--f-head);
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.about-stat-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.4;
+}
+
+/* Bottom row: two equal photos */
+.about-bottom-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.about-photo-small,
+.about-photo-surgery {
+    flex: 1;
+    border-radius: var(--r-md);
+    overflow: hidden;
+    height: clamp(160px, 22vw, 240px);
+}
+
+/*
+    Experience badge — absolutely positioned,
+    overlaps the bottom-left corner of the photo grid.
+    Width matches .about-photo-main (58%) minus the gap.
+*/
+.about-exp-badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: calc(58% - 7px);
+    background: var(--teal-dark);
+    color: var(--white);
+    border-radius: var(--r-sm);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--f-head);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.4;
+    z-index: 2;
+    box-shadow: var(--sh-md);
+}
+
+.exp-check {
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Right text content */
+.about-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.about-eyebrow {
+    font-family: var(--f-head);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 12px;
+}
+
+.about-title {
+    font-family: var(--f-head);
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-weight: 900;
+    color: var(--txt-head);
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+    margin-bottom: 16px;
+}
+
+.about-desc {
+    font-size: 0.95rem;
+    color: var(--txt-muted);
+    line-height: 1.72;
+    margin-bottom: 26px;
+}
+
+/* Feature checklist grid */
+.about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 16px;
+    margin-bottom: 30px;
+}
+
+/*
+    Bug Fix #4: Original CSS used .features-col (plural) but HTML had .feature-col
+    Now consistent: both use .feature-col
+*/
+.feature-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--f-head);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--txt-head);
+}
+
+.f-check {
+    color: var(--teal);
+    font-weight: 900;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.btn-meet-team {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blue);
+    color: var(--white);
+    border-radius: var(--r-full);
+    padding: 13px 28px;
+    font-family: var(--f-head);
+    font-size: 0.92rem;
+    font-weight: 700;
+    transition: var(--ease);
+}
+
+.btn-meet-team:hover {
+    background: var(--blue-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--sh-md);
+}
+
+
+/* =============================================================
+   7. DEPARTMENTS SECTION
+============================================================= */
+
+.dept-section {
+    background: var(--bg-dept);
+    padding: 80px 0 90px;
+    position: relative;
+    overflow: hidden;
+}
+
+.dept-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+.dept-eyebrow {
+    font-family: var(--f-head);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 12px;
+}
+
+.dept-title {
+    font-family: var(--f-head);
+    font-size: clamp(1.7rem, 3vw, 2.35rem);
+    font-weight: 900;
+    color: var(--txt-head);
+    line-height: 1.22;
+    letter-spacing: -0.5px;
+    margin-bottom: 48px;
+}
+
+.dept-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.dept-card {
+    background: var(--white);
+    border-radius: var(--r-md);
+    padding: 32px 26px;
+    border: 1.5px solid transparent;
+    transition: var(--ease);
+    cursor: pointer;
+}
+
+.dept-card:hover {
+    border-color: var(--blue);
+    box-shadow: var(--sh-md);
+    transform: translateY(-3px);
+}
+
+/* Active / selected card (teal border) */
+.dept-card-active {
+    border: 2px solid var(--teal) !important;
+    box-shadow: 0 8px 32px rgba(27, 170, 122, 0.13);
+}
+
+.dept-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+}
+
+.dept-icon-blue { background: var(--blue); }
+.dept-icon-teal { background: var(--teal); }
+
+.dept-card-title {
+    font-family: var(--f-head);
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--txt-head);
+    margin-bottom: 10px;
+}
+
+.dept-card-desc {
+    font-size: 0.875rem;
+    color: var(--txt-muted);
+    line-height: 1.65;
+    margin-bottom: 20px;
+}
+
+.dept-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--f-head);
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: var(--ease);
+}
+
+.dept-rm-blue { color: var(--blue); }
+.dept-rm-teal { color: var(--teal); }
+
+.dept-read-more:hover {
+    gap: 9px;
+}
+
+
+/* =============================================================
+   8. RESPONSIVE  —  1024px  (Tablet landscape)
+============================================================= */
+
+@media (max-width: 1024px) {
+
+    /* Hero: stack vertically */
+    .hero-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 56px 32px 0;
+        gap: 32px;
+    }
+
+    .hero-content {
+        max-width: 100%;
+        padding-bottom: 0;
+    }
+
+    .hero-visual {
+        width: 100%;
+        max-width: 460px;
+        align-self: center;
+    }
+
+    .hero-img-bg-circle {
+        display: none;
+    }
+
+    .hero-doctor-photo {
+        border-radius: var(--r-lg);
+        max-height: 400px;
+    }
+
+    /* About: stack vertically */
+    .about-inner {
+        flex-direction: column;
+        gap: 48px;
+    }
+
+    .about-images {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .about-photo-main {
+        height: clamp(200px, 35vw, 300px);
+    }
+
+    .about-exp-badge {
+        width: calc(58% - 7px);
+    }
+}
+
+
+/* =============================================================
+   9. RESPONSIVE  —  768px  (Tablet portrait)
+============================================================= */
+
+@media (max-width: 768px) {
+
+    /* Hide topbar contact text if needed */
+    .topbar-inner {
+        padding: 8px 20px;
+        gap: 6px;
+    }
+
+    /* Navbar: show hamburger, hide desktop links */
+    .nav-inner {
+        padding: 0 20px;
+        height: 64px;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-btn-desktop {
+        display: none !important;
+    }
+
+    /* Mobile dropdown menu */
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        border-top: 1px solid var(--border);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+        padding: 0 16px;
+        gap: 2px;
+        /* Closed state */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.32s ease, padding 0.32s ease;
+        z-index: 999;
+    }
+
+    /* Open state — toggled by JavaScript */
+    .nav-links.nav-open {
+        max-height: 500px;
+        padding: 12px 16px 20px;
+    }
+
+    .nav-links li a {
+        padding: 12px 14px;
+        border-radius: var(--r-sm);
+        font-size: 0.95rem;
+        width: 100%;
+    }
+
+    .nav-links li a:hover {
+        background: var(--bg-hero);
+    }
+
+    /* Show appointment button inside mobile menu */
+    .nav-btn-mobile {
+        display: block;
+        margin-top: 8px;
+    }
+
+    .nav-btn-mobile a {
+        display: flex;
+        justify-content: center;
+        background: var(--blue);
+        color: var(--white);
+        border-radius: var(--r-full);
+        padding: 13px 22px;
+        font-family: var(--f-head);
+        font-size: 0.92rem;
+        font-weight: 700;
+    }
+
+    /* Hero */
+    .hero-inner {
+        padding: 44px 20px 0;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        letter-spacing: -1px;
+    }
+
+    .hero-desc {
+        font-size: 0.92rem;
+    }
+
+    .hero-visual {
+        max-width: 360px;
+    }
+
+    .hero-doctor-photo {
+        max-height: 340px;
+    }
+
+    /* About */
+    .about-section {
+        padding: 60px 0 72px;
+    }
+
+    .about-inner {
+        padding: 0 20px;
+        gap: 40px;
+    }
+
+    .about-photo-main {
+        height: 220px;
+    }
+
+    .about-photo-small,
+    .about-photo-surgery {
+        height: 160px;
+    }
+
+    .about-exp-badge {
+        width: calc(58% - 7px);
+        font-size: 0.8rem;
+        padding: 11px 14px;
+    }
+
+    .about-title {
+        font-size: 1.6rem;
+    }
+
+    .about-features {
+        gap: 0 12px;
+    }
+
+    .feature-item {
+        font-size: 0.84rem;
+    }
+
+    /* Departments */
+    .dept-section {
+        padding: 60px 0 72px;
+    }
+
+    .dept-container {
+        padding: 0 20px;
+    }
+
+    .dept-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .dept-title {
+        font-size: 1.7rem;
+        margin-bottom: 36px;
+    }
+
+    .dept-card {
+        padding: 24px 20px;
+    }
+
+    .dept-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 18px;
+    }
+}
+
+
+/* =============================================================
+   10. RESPONSIVE  —  480px  (Mobile phones)
+============================================================= */
+
+@media (max-width: 480px) {
+
+    /* Hide topbar on small phones */
+    .topbar {
+        display: none;
+    }
+
+    /* Navbar */
+    .nav-inner {
+        padding: 0 16px;
+        height: 60px;
+    }
+
+    .logo-text {
+        font-size: 1.2rem;
+    }
+
+    .nav-links {
+        top: 60px;
+    }
+
+    /* Hero */
+    .hero-inner {
+        padding: 36px 16px 0;
+        gap: 24px;
+    }
+
+    .hero-badge {
+        font-size: 0.78rem;
+        padding: 6px 15px;
+    }
+
+    .hero-title {
+        font-size: 1.75rem;
+        letter-spacing: -0.8px;
+    }
+
+    .hero-underline {
+        width: 140px;
+    }
+
+    .hero-desc {
+        font-size: 0.88rem;
+        margin-bottom: 28px;
+    }
+
+    .btn-find-doctor,
+    .btn-emergency {
+        padding: 12px 20px;
+        font-size: 0.86rem;
+    }
+
+    .hero-btns {
+        gap: 10px;
+    }
+
+    .hero-visual {
+        max-width: 100%;
+    }
+
+    .hero-doctor-photo {
+        max-height: 280px;
+        border-radius: var(--r-md) var(--r-md) 0 0;
+    }
+
+    /* About */
+    .about-section {
+        padding: 48px 0 60px;
+    }
+
+    .about-inner {
+        padding: 0 16px;
+        gap: 32px;
+    }
+
+    /* Stack top row on small phones */
+    .about-top-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .about-photo-main {
+        width: 100%;
+        height: 220px;
+    }
+
+    .about-stat-card {
+        padding: 20px 16px;
+        min-height: auto;
+    }
+
+    .about-stat-num {
+        font-size: 2.4rem;
+    }
+
+    .about-bottom-row {
+        gap: 10px;
+    }
+
+    .about-photo-small,
+    .about-photo-surgery {
+        height: 140px;
+    }
+
+    /* Badge goes static (not absolute) on small phones */
+    .about-exp-badge {
+        position: static;
+        width: 100%;
+        margin-top: 12px;
+        border-radius: var(--r-sm);
+    }
+
+    .about-title {
+        font-size: 1.45rem;
+    }
+
+    /* Single column feature list */
+    .about-features {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .feature-col {
+        gap: 12px;
+    }
+
+    .btn-meet-team {
+        padding: 12px 24px;
+        font-size: 0.88rem;
+    }
+
+    /* Departments */
+    .dept-section {
+        padding: 48px 0 60px;
+    }
+
+    .dept-container {
+        padding: 0 16px;
+    }
+
+    .dept-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .dept-card {
+        padding: 22px 18px;
+    }
+
+    .dept-title {
+        font-size: 1.5rem;
+        margin-bottom: 28px;
+    }
+
+    .dept-icon {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 16px;
+    }
+
+    .dept-card-title {
+        font-size: 0.95rem;
+    }
+
+    .dept-card-desc {
+        font-size: 0.84rem;
+    }
+}

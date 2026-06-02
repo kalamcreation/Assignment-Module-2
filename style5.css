@@ -1,22 +1,5 @@
 /* =============================================================
    style4.css  —  PureHealth Website
-   Pure Raw CSS  |  No Framework Dependency
-   Fully Responsive  |  Clean Human-Written Code
-   
-   Bug Fixes Applied:
-   #1  Wrong Tailwind CDN (removed from HTML, not needed here)
-   #2  .hamburger.open span:nth-child(3) — missing dot fixed
-   #3  var(--r--sm) double-dash typo fixed → var(--r-sm)
-   #4  .features-col vs .feature-col mismatch fixed
-   #5  about-photo-main width 40% → 58% (matches screenshot)
-   #6  dept h2 missing .dept-title class fixed in HTML
-   #7  doctor.png local file → Unsplash URL fixed in HTML
-   #8  Hamburger JS was completely missing — added in HTML
-============================================================= */
-
-
-/* =============================================================
-   1. DESIGN TOKENS  (CSS Custom Properties)
 ============================================================= */
 
 :root {
@@ -129,7 +112,8 @@ img {
 
 .topbar-item {
     color: rgba(255, 255, 255, 0.92);
-    font-size: 0.82rem;
+    font-size: 16px;
+    font-weight: 400;
     font-family: var(--f-body);
     display: flex;
     align-items: center;
@@ -143,8 +127,7 @@ img {
 
 .topbar-social {
     color: rgba(255, 255, 255, 0.8);
-    width: 22px;
-    height: 22px;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -161,7 +144,7 @@ img {
     gap: 4px;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.92);
-    font-size: 0.82rem;
+    font-size: 16px;
 }
 
 
@@ -283,7 +266,7 @@ img {
     border: none;
     cursor: pointer;
     padding: 6px;
-    border-radius: var(--r-sm);   /* Bug Fix #3: was var(--r--sm) — double dash */
+    border-radius: var(--r-sm);
     transition: var(--ease);
 }
 
@@ -311,7 +294,6 @@ img {
     transform: scaleX(0);
 }
 
-/* Bug Fix #2: was "hamburger.open" — missing the dot */
 .hamburger.open span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
 }
@@ -495,7 +477,6 @@ img {
     flex: 0 0 auto;
     width: clamp(320px, 46%, 510px);
     position: relative;
-    /* Extra bottom space for the experience badge overlay */
     padding-bottom: 30px;
 }
 
@@ -507,11 +488,6 @@ img {
     align-items: flex-start;
 }
 
-/*
-    Bug Fix #5: was width: 40% — too narrow, didn't match screenshot.
-    Now 58% so the photo is tall and dominant like in the design.
-    The 85% card fills the remaining ~38%.
-*/
 .about-photo-main {
     width: 58%;
     flex-shrink: 0;
@@ -566,11 +542,6 @@ img {
     height: clamp(160px, 22vw, 240px);
 }
 
-/*
-    Experience badge — absolutely positioned,
-    overlaps the bottom-left corner of the photo grid.
-    Width matches .about-photo-main (58%) minus the gap.
-*/
 .about-exp-badge {
     position: absolute;
     bottom: 0;
@@ -641,10 +612,6 @@ img {
     margin-bottom: 30px;
 }
 
-/*
-    Bug Fix #4: Original CSS used .features-col (plural) but HTML had .feature-col
-    Now consistent: both use .feature-col
-*/
 .feature-col {
     display: flex;
     flex-direction: column;

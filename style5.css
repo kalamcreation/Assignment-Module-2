@@ -127,7 +127,6 @@ img {
 
 .topbar-social {
     color: rgba(255, 255, 255, 0.8);
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,7 +164,7 @@ img {
     max-width: 1140px;
     margin: 0 auto;
     padding: 0 32px;
-    height: 75px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -429,7 +428,7 @@ img {
     justify-content: center;
 }
 
-.hero-img-bg-circle {
+/* .hero-img-bg-circle {
     position: absolute;
     bottom: 0;
     right: 10%;
@@ -438,11 +437,11 @@ img {
     background: rgba(255, 255, 255, 0.72);
     border-radius: 50%;
     z-index: 0;
-}
+} */
 
 .hero-doctor-photo {
     position: relative;
-    z-index: 1;
+    z-index: 1000;
     width: 100%;
     height: auto;
     object-fit: cover;
